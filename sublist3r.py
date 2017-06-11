@@ -65,14 +65,16 @@ def parse_args():
                         default=False)
     parser.add_argument('-t', '--threads', help='Number of threads to use for subbrute bruteforce', type=int,
                         default=30)
+    parser.add_argument('-to', '--takeover-scan', help='Scan for subdomain takeover issues', nargs='?', default=False)
     parser.add_argument('-e', '--engines', help='Specify a comma-separated list of search engines')
     parser.add_argument('-o', '--output', help='Save the results to text file')
     return parser.parse_args()
 
 
-def main(domain, threads, savefile, ports, silent, verbose, enable_bruteforce, engines):
+def main(domain, threads, savefile, ports, silent, verbose, enable_bruteforce, takeover_check, engines):
     logger.is_verbose = verbose
-    options = ScanParams(silent=silent, verbose=verbose, brute_force=enable_bruteforce, thread_count=threads, engines=engines, ports=ports, savefile=savefile)
+    options = ScanParams(silent=silent, verbose=verbose, brute_force=enable_bruteforce, takeover_check=takeover_check,
+                         thread_count=threads, engines=engines, ports=ports, savefile=savefile)
     scanner = SubScann3r(domain, logger, options)
     return scanner.scan()
 
@@ -86,7 +88,11 @@ if __name__ == "__main__":
     enable_bruteforce = args.bruteforce
     verbose = args.verbose
     engines = args.engines
+    takeover_check = args.takeover_scan
     if verbose or verbose is None:
         verbose = True
+    if takeover_check or takeover_check is None:
+        takeover_check = True
     logger.banner()
-    res = main(domain, threads, savefile, ports, silent=False, verbose=verbose, enable_bruteforce=enable_bruteforce, engines=engines)
+    res = main(domain, threads, savefile, ports, silent=False, verbose=verbose, enable_bruteforce=enable_bruteforce,
+               takeover_check=takeover_check, engines=engines)
