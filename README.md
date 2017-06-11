@@ -1,5 +1,5 @@
 # This is not the official repo for sublist3r, this version contains extra features.
-# The original version: https://github.com/aboul3la/Sublist3r
+## The original version: https://github.com/aboul3la/Sublist3r
 ## About Sublist3r 
 
 Sublist3r is python tool that is designed to enumerate subdomains of websites through OSINT. It helps penetration testers and bug hunters collect and gather subdomains for the domain they are targeting. Sublist3r enumerates subdomains using many search engines such as Google, Yahoo, Bing, Baidu, and Ask. Sublist3r also enumerates subdomains using Netcraft, Virustotal, ThreatCrowd, DNSdumpster and ReverseDNS.
