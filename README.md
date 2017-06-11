@@ -1,5 +1,6 @@
-# This is not the official repo for sublist3r, this version contains extra features.
+# This is not the official repo for sublist3r, this version contains extra features(notably subdomain takeover checks).
 ## The original version: https://github.com/aboul3la/Sublist3r
+
 ## About Sublist3r 
 
 Sublist3r is python tool that is designed to enumerate subdomains of websites through OSINT. It helps penetration testers and bug hunters collect and gather subdomains for the domain they are targeting. Sublist3r enumerates subdomains using many search engines such as Google, Yahoo, Bing, Baidu, and Ask. Sublist3r also enumerates subdomains using Netcraft, Virustotal, ThreatCrowd, DNSdumpster and ReverseDNS.
@@ -104,16 +105,17 @@ c:\python27\python.exe -m pip install win_unicode_console colorama
 
 ## Usage
 
-Short Form    | Long Form     | Description
-------------- | ------------- |-------------
--d            | --domain      | Domain name to enumerate subdomains of
--b            | --bruteforce  | Enable the subbrute bruteforce module
--p            | --ports       | Scan the found subdomains against specific tcp ports
--v            | --verbose     | Enable the verbose mode and display results in realtime
--t            | --threads     | Number of threads to use for subbrute bruteforce
--e            | --engines     | Specify a comma-separated list of search engines
--o            | --output      | Save the results to text file
--h            | --help        | show the help message and exit
+Short Form    | Long Form         | Description
+------------- | ------------------|-------------
+-d            | --domain          | Domain name to enumerate subdomains of
+-b            | --bruteforce      | Enable the subbrute bruteforce module
+-p            | --ports           | Scan the found subdomains against specific tcp ports
+-v            | --verbose         | Enable the verbose mode and display results in realtime
+-t            | --threads         | Number of threads to use for subbrute bruteforce
+-e            | --engines         | Specify a comma-separated list of search engines
+-o            | --output          | Save the results to text file
+-h            | --help            | show the help message and exit
+-to           | --takover-check   | [New] Scan subdomains for unregistered services such as Github Pages
 
 ### Examples
 
