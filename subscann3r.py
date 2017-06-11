@@ -1,32 +1,21 @@
+import multiprocessing
+import os
 import re
 import sys
-import os
-import argparse
-import time
-import hashlib
-import random
-import multiprocessing
-import threading
-import socket
-from collections import Counter
 
 from engines.engine import Engines
-from util.util import Util
 
 # external modules
 from subbrute import subbrute
-import dns.resolver
+
+from util.port_scanner import PortScanner
+from util.util import Util
 
 # Python 2.x and 3.x compatibility
-from util.port_scanner import PortScanner
-from util.logger import Logger
-
-if sys.version > '3':
+if sys.version >= '3':
     import urllib.parse as urlparse
-    import urllib.parse as urllib
 else:
     import urlparse
-    import urllib
 
 # Check if we are running this on windows platform
 is_windows = sys.platform.startswith('win')
@@ -126,17 +115,6 @@ class SubScann3r:
 
             if not self.scan_flags.Silent:
                 print(self.logger.Y + "[-] Total Unique Subdomains Found: %s" % len(subdomains) + self.logger.W)
-
-            if self.scan_flags.TakeoverCheck:
-                print(self.logger.G + "[-] Checking for subdomains pointing to unregistered services" + self.logger.W)
-                for subdomain in subdomains:
-                    if self.scan_flags.Verbose:
-                        print(self.logger.G + "[-] Checking " + subdomain + self.logger.W)
-
-                    services = Util.get_url_signatures("http://" + subdomain)
-                    if len(services) > 0:
-                        for service in services:
-                            print(self.logger.Y + "[-] Found unregistered service \"" + service + "\" on subdomain " + subdomain + self.logger.W)
 
             if self.scan_flags.Ports:
                 if not self.scan_flags.Silent:
