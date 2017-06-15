@@ -13,7 +13,6 @@ import time
 from engines.enumarator_base import EnumeratorBase
 import requests
 
-
 # Python 2.x and 3.x compatiablity
 from util.logger import Logger
 
@@ -24,10 +23,11 @@ else:
     import urlparse
     import urllib
 
+
 class EnumratorBaseThreaded(multiprocessing.Process, EnumeratorBase):
-    def __init__(self, base_url: str, engine_name: str, domain: str, subdomains: list = None, q: list = None, lock: threading.Lock = threading.Lock(),
-                 silent: bool = False,
-                 logger: Logger = None) -> object:
+    def __init__(self, base_url, engine_name, domain, subdomains=None, q=None, lock=threading.Lock(),
+                 silent=False,
+                 logger=None):
         subdomains = subdomains or []
         EnumeratorBase.__init__(self, base_url, engine_name, domain, subdomains, silent, logger)
         multiprocessing.Process.__init__(self)
@@ -193,7 +193,8 @@ class BingEnum(EnumratorBaseThreaded):
         self.engine_name = "Bing"
         self.MAX_DOMAINS = 30
         self.MAX_PAGES = 0
-        EnumratorBaseThreaded.__init__(self, base_url, self.engine_name, domain, subdomains, q=q, silent=silent, logger=logger)
+        EnumratorBaseThreaded.__init__(self, base_url, self.engine_name, domain, subdomains, q=q, silent=silent,
+                                       logger=logger)
         self.q = q
         return
 
@@ -595,6 +596,7 @@ class PassiveDNS(EnumratorBaseThreaded):
             agents_regex = re.compile('<a href="/ua/.*?>(.*)</a>')
             agents = agents_regex.findall(agents_list)
             ua = random.choice(agents)
+            print(ua)
         except Exception as e:
             pass
 
