@@ -71,6 +71,8 @@ class GoogleEnum(EnumratorBaseThreaded):
         return links_list
 
     def check_response_errors(self, resp):
+        if type(resp) == type(1):
+            return False
         if 'Our systems have detected unusual traffic' in resp:
             self.print_(self.logger.R + "[!] Error: Google probably now is blocking our requests" + self.logger.W)
             self.print_(self.logger.R + "[~] Finished now the Google Enumeration ..." + self.logger.W)
@@ -158,6 +160,7 @@ class AskEnum(EnumratorBaseThreaded):
     def extract_domains(self, resp):
         link_regx = re.compile('<p class="web-result-url">(.*?)</p>')
         try:
+            links_list = []
             links_list = link_regx.findall(resp)
             for link in links_list:
                 if not link.startswith('http'):
