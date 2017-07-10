@@ -309,7 +309,7 @@ class NetcraftEnum(EnumratorBaseThreaded):
         try:
             resp = self.session.get(url, headers=self.headers, timeout=self.timeout, cookies=cookies)
         except Exception as e:
-            self.print_(e)
+            self.print_(e, 'netcraft modules')
             resp = None
         return resp
 
@@ -614,6 +614,147 @@ class PassiveDNS(EnumratorBaseThreaded):
             pass
 
 
+class HackerTarget(EnumratorBaseThreaded):
+    def __init__(self, domain, subdomains=None, q=None, silent=False, logger=None):
+        subdomains = subdomains or []
+        base_url = 'https://api.hackertarget.com/hostsearch/?q={domain}'
+        self.engine_name = "HackerTarget"
+        self.lock = threading.Lock()
+        self.q = q
+        super(HackerTarget, self).__init__(base_url, self.engine_name, domain, subdomains, q=q, silent=silent,
+                                           logger=logger)
+        return
+
+    def req(self, url):
+        try:
+            resp = self.session.get(url, headers=self.headers, timeout=self.timeout)
+        except Exception as e:
+            resp = None
+
+        return self.get_response(resp)
+
+    def enumerate(self):
+        url = self.base_url.format(domain=self.domain)
+        resp = self.req(url)
+        if not resp:
+            return self.subdomains
+
+        self.extract_domains(resp)
+        return self.subdomains
+
+    def extract_domains(self, resp):
+        try:
+            for subdomain in resp.split('\n'):
+                subdomain = subdomain.split(',')[0]
+                if subdomain not in self.subdomains and subdomain != self.domain:
+                    if self.verbose:
+                        self.print_("%s%s: %s%s" % (self.logger.R, self.engine_name, self.logger.W, subdomain))
+                    self.subdomains.append(subdomain.strip())
+        except Exception as e:
+            pass
+
+
+class DnsDB(EnumratorBaseThreaded):
+    def __init__(self, domain, subdomains=None, q=None, silent=False, logger=None):
+        subdomains = subdomains or []
+        base_url = 'https://www.dnsdb.org/f/{domain}.dnsdb.org/'
+        self.engine_name = "DnsDB"
+        self.lock = threading.Lock()
+        self.q = q
+        super(DnsDB, self).__init__(base_url, self.engine_name, domain, subdomains, q=q, silent=silent, logger=logger)
+        return
+
+    def req(self, url):
+        try:
+            resp = self.session.get(url, headers=self.headers, timeout=self.timeout)
+        except Exception as e:
+            resp = None
+
+        return self.get_response(resp)
+
+    def enumerate(self):
+        url = self.base_url.format(domain=self.domain)
+        resp = self.req(url)
+        if not resp:
+            return self.subdomains
+
+        self.extract_domains(resp)
+        return self.subdomains
+
+    def extract_domains(self, resp):
+        try:
+            subdomains = re.findall(r"(?<=href=\").+?(?=\")|(?<=href=\').+?(?=\')", resp)
+            for subdomain in subdomains:
+                subdomain = subdomain.replace('https://', '').replace('.dnsdb.org/', '')
+                if subdomain not in self.subdomains and subdomain != self.domain:
+                    if self.verbose:
+                        self.print_("%s%s: %s%s" % (self.logger.R, self.engine_name, self.logger.W, subdomain))
+                    self.subdomains.append(subdomain.strip())
+        except Exception as e:
+            pass
+
+
+class GoogleTER(EnumratorBaseThreaded):
+    def __init__(self, domain, subdomains=None, q=None, silent=False, logger=None):
+        subdomains = subdomains or []
+        base_url = 'https://www.google.com/transparencyreport/jsonp/ct/search?domain= \
+                   {domain}&incl_exp=false&incl_sub=true&c='
+        self.engine_name = "GoogleTER"
+        self.lock = threading.Lock()
+        self.q = q
+        self.Token = ""
+        super(GoogleTER, self).__init__(base_url, self.engine_name, domain, subdomains, q=q, silent=silent,
+                                        logger=logger)
+        return
+
+    def req(self, url):
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 \
+                          Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'en-GB,en;q=0.5',
+            'Accept-Encoding': 'gzip, deflate',
+        }
+
+        try:
+            resp = self.session.get(url, headers=headers, timeout=self.timeout)
+        except Exception as e:
+            self.print_(e)
+            resp = None
+        return self.get_response(resp)
+
+    def enumerate(self):
+        url = self.base_url.format(domain=self.domain)
+        while True:
+            resp = self.req(url)
+            if not type(resp) == type(1):
+                self.extract_domains(resp)
+                if "nextPageToken" not in resp:
+                    return self.subdomains
+                url = self.base_url.format(domain=self.domain) + "&token=" + self.Token.replace("=", "%3D")
+
+    def extract_domains(self, resp):
+        _jsonp_begin = r'/* API response */('
+        _jsonp_end = r'));'
+        try:
+
+            googleresult = json.loads(resp[len(_jsonp_begin):-len(_jsonp_end)])
+            for subs in googleresult["results"]:
+
+                if self.domain in googleresult:
+                    continue
+                subdomain = subs["subject"]
+                if subdomain.startswith("*."):
+                    subdomain = subdomain.replace("*.", "")
+                if subdomain not in self.subdomains and subdomain != self.domain and subdomain.endswith(self.domain):
+                    if self.verbose:
+                        self.print_("%s%s: %s%s" % (self.logger.R, self.engine_name, self.logger.W, subdomain))
+                    self.subdomains.append(subdomain.strip())
+            self.Token = googleresult["nextPageToken"]
+        except Exception:
+            pass
+
+
 class Engines:
     supported_engines = {'baidu': BaiduEnum,
                          'yahoo': YahooEnum,
@@ -625,5 +766,8 @@ class Engines:
                          'virustotal': Virustotal,
                          'threatcrowd': ThreatCrowd,
                          'ssl': CrtSearch,
-                         'passivedns': PassiveDNS
+                         'passivedns': PassiveDNS,
+                         'googleter': GoogleTER,
+                         'hackertarget': HackerTarget,
+                         'dnsdb': DnsDB
                          }
