@@ -28,6 +28,7 @@ try:
 except:
     pass
 
+
 class SubScann3r:
     def __init__(self, domain, logger, scan_flags):
         self.logger = logger
@@ -108,7 +109,7 @@ class SubScann3r:
         subdomains = search_list.union(bruteforce_list)
 
         if subdomains:
-            subdomains = sorted(subdomains, key=Util.subdomain_sorting_key)
+            subdomains = sorted(subdomains, key=Util().subdomain_sorting_key)
 
             if self.scan_flags.SaveFile:
                 Util.write_file(self.scan_flags.SaveFile, subdomains)
@@ -122,7 +123,7 @@ class SubScann3r:
                     if self.scan_flags.Verbose:
                         print(self.logger.G + "[-] Checking " + subdomain + self.logger.W)
 
-                    services = Util.get_url_signatures("http://" + subdomain)
+                    services = Util().get_url_signatures("http://" + subdomain)
                     if len(services) > 0:
                         for service in services:
                             print(
