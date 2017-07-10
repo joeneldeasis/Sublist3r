@@ -657,7 +657,7 @@ class HackerTarget(EnumratorBaseThreaded):
 class DnsDB(EnumratorBaseThreaded):
     def __init__(self, domain, subdomains=None, q=None, silent=False, logger=None):
         subdomains = subdomains or []
-        base_url = 'http://www.dnsdb.org/f/{domain}.dnsdb.org/'
+        base_url = 'https://www.dnsdb.org/f/{domain}.dnsdb.org/'
         self.engine_name = "DnsDB"
         self.lock = threading.Lock()
         self.q = q
@@ -685,7 +685,7 @@ class DnsDB(EnumratorBaseThreaded):
         try:
             subdomains = re.findall(r"(?<=href=\").+?(?=\")|(?<=href=\').+?(?=\')", resp)
             for subdomain in subdomains:
-                subdomain = subdomain.replace('http://', '').replace('.dnsdb.org/', '')
+                subdomain = subdomain.replace('https://', '').replace('.dnsdb.org/', '')
                 if subdomain not in self.subdomains and subdomain != self.domain:
                     if self.verbose:
                         self.print_("%s%s: %s%s" % (self.logger.R, self.engine_name, self.logger.W, subdomain))
