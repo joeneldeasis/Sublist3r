@@ -4,34 +4,18 @@
 # By Ahmed Aboul-Ela - twitter.com/aboul3la
 
 # modules in standard library
-import re
 import sys
-import os
 import argparse
-import time
-import hashlib
-import random
-import multiprocessing
-import threading
-import socket
 from collections import Counter
 
 # external modules
 from scan_flags import ScanParams
-from subbrute import subbrute
-import dns.resolver
-import requests
+
 
 # Python 2.x and 3.x compatiablity
 from subscann3r import SubScann3r
 from util.logger import Logger
 
-if sys.version > '3':
-    import urllib.parse as urlparse
-    import urllib.parse as urllib
-else:
-    import urlparse
-    import urllib
 
 # In case you cannot install some of the required development packages
 # there's also an option to disable the SSL warning:
