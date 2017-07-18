@@ -1,4 +1,4 @@
-# This is not the official repo for sublist3r, this version contains extra features(notably subdomain takeover checks).
+# This is not the official repo for sublist3r, this version contains extra features (notably subdomain takeover checks).
 ## The original version: https://github.com/aboul3la/Sublist3r
 
 ## About Sublist3r 
