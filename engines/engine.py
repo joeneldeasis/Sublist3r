@@ -240,8 +240,7 @@ class BaiduEnum(EnumratorBaseThreaded):
         self.engine_name = "Baidu"
         self.MAX_DOMAINS = 2
         self.MAX_PAGES = 760
-        EnumratorBaseThreaded.__init__(self, base_url, self.engine_name, domain, subdomains, q=q, silent=silent,
-                                       logger=logger)
+        EnumratorBaseThreaded.__init__(self, base_url, self.engine_name, domain, subdomains, q=q, silent=silent, logger=logger)
         self.querydomain = self.domain
         self.q = q
         return

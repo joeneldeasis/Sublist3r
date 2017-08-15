@@ -37,4 +37,5 @@ class Logger:
                     |____/ \__,_|_.__/|_|_|___/\__|____/|_|%s%s
 
                     # Coded By Ahmed Aboul-Ela - @aboul3la
+		    # Rewritten by Dylan Katz  - @Plazmaz
         """ % (self.R, self.W, self.Y))

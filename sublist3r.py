@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
-# Sublist3r v1.0
-# By Ahmed Aboul-Ela - twitter.com/aboul3la
+# Sublist3r v1.0p (Plazmaz's Fork)
+# By Ahmed Aboul-Ela - https://www.twitter.com/aboul3la
+# Rewritten by Dylan Katz - https://www.twitter.com/Plazmaz
 
 # modules in standard library
 import sys

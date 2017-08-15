@@ -59,7 +59,7 @@ class SubScann3r:
                 print(self.logger.R + "Error: Please enter a valid domain" + self.logger.W)
             return []
 
-        if not self.domain.startswith('http://') or not self.domain.startswith('https://'):
+        if not self.domain.startswith('http://') and not self.domain.startswith('https://'):
             self.domain = 'http://' + self.domain
 
         parsed_domain = urlparse.urlparse(self.domain)
