@@ -112,7 +112,8 @@ class SubScann3r:
             subdomains = sorted(subdomains, key=Util().subdomain_sorting_key)
 
             if self.scan_flags.SaveFile:
-                Util.write_file(self.scan_flags.SaveFile, subdomains)
+                print("%s[-] Saving results to file: %s%s%s%s" % (self.logger. Y, self.logger.W, self.logger.R, self.scan_flags.SaveFile, self.logger.W))
+                Util().write_file(self.scan_flags.SaveFile, subdomains)
 
             if not self.scan_flags.Silent:
                 print(self.logger.Y + "[-] Total Unique Subdomains Found: %s" % len(subdomains) + self.logger.W)
