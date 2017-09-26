@@ -33,7 +33,6 @@ class Util:
 
     def write_file(self, filename, subdomains):
         # saving subdomains results to output file
-        print("%s[-] Saving results to file: %s%s%s%s" % (Y, W, R, filename, W))
         with open(str(filename), 'wt') as f:
             for subdomain in subdomains:
                 f.write(subdomain + "\r\n")

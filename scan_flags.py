@@ -7,6 +7,6 @@ class ScanParams:
         self.BruteForce = brute_force
         self.ThreadCount = thread_count
         self.TakeoverCheck = takeover_check
-        self. Engines = engines
+        self.Engines = engines
         self.Ports = ports
         self.SaveFile = savefile
