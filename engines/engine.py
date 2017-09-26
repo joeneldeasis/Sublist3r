@@ -412,7 +412,7 @@ class DNSdumpster(EnumratorBaseThreaded):
         token = csrf_regex.findall(resp)[0]
         return token.strip()
 
-    def enumerate(self):
+    def enumerate(self, **kwargs):
         resp = self.req('GET', self.base_url)
         token = self.get_csrftoken(resp)
         params = {'csrfmiddlewaretoken': token, 'targetip': self.domain}

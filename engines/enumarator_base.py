@@ -42,7 +42,7 @@ class EnumeratorBase(object):
 
     def print_banner(self):
         """ subclass can override this if they want a fancy banner :)"""
-        self.print_(self.logger.G + "[-] Searching now in %s.." % (self.engine_name) + self.logger.W)
+        self.print_(self.logger.G + "[-] Searching now in %s.." % self.engine_name + self.logger.W)
         return
 
     def send_req(self, query, page_no=1):

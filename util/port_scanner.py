@@ -1,7 +1,7 @@
 import socket
 import threading
 
-from sublist3r import logger
+from util import logger
 
 
 class PortScanner:

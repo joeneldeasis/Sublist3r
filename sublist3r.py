@@ -4,22 +4,20 @@
 # By Ahmed Aboul-Ela - https://www.twitter.com/aboul3la
 # Rewritten by Dylan Katz - https://www.twitter.com/Plazmaz
 
+import argparse
 # modules in standard library
 import sys
-import argparse
-from collections import Counter
 
 # external modules
 from scan_flags import ScanParams
-
-
 # Python 2.x and 3.x compatiablity
 from subscann3r import SubScann3r
-from util.logger import Logger
-
 
 # In case you cannot install some of the required development packages
 # there's also an option to disable the SSL warning:
+from util.util import Util
+logger = Util.get_logger()
+
 try:
     import requests.packages.urllib3
 
@@ -27,9 +25,6 @@ try:
 except:
     pass
 
-# Check if we are running this on windows platform
-is_windows = sys.platform.startswith('win')
-logger = Logger(is_windows, False)
 
 def parser_error(errmsg):
     logger.banner()
