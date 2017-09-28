@@ -134,7 +134,7 @@ class SubScann3r:
                 if not self.scan_flags.Silent:
                     print(self.logger.G + "[-] Starting port scan for the following ports: %s%s" % (self.logger.Y, self.scan_flags.Ports) + self.logger.W)
                 ports = self.scan_flags.Ports.split(',')
-                pscan = PortScanner(subdomains, ports)
+                pscan = PortScanner(subdomains, ports, self.logger)
                 pscan.run()
 
             elif not self.scan_flags.Silent:

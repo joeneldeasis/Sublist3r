@@ -3,7 +3,7 @@ import re
 import requests
 import sys
 
-from util.logger import Logger
+from .logger import Logger
 
 
 class Util:

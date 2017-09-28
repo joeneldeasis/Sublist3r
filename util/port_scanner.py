@@ -1,11 +1,10 @@
 import socket
 import threading
 
-from util import logger
-
 
 class PortScanner:
-    def __init__(self, subdomains, ports):
+    def __init__(self, subdomains, ports, logger):
+        self.logger = logger
         self.subdomains = subdomains
         self.ports = ports
         self.threads = 20
@@ -26,8 +25,8 @@ class PortScanner:
                 pass
         self.lock.release()
         if len(openports) > 0:
-            print("%s%s%s - %sFound open ports:%s %s%s%s" % (logger.G, host, logger.W, logger.R, logger.W,
-                                                             logger.Y, ', '.join(openports), logger.W))
+            print("%s%s%s - %sFound open ports:%s %s%s%s" % (self.logger.G, host, self.logger.W, self.logger.R, self.logger.W,
+                                                             self.logger.Y, ', '.join(openports), self.logger.W))
 
     def run(self):
         for subdomain in self.subdomains:
