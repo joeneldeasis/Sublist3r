@@ -48,7 +48,7 @@ class GoogleEnum(EnumratorBaseThreaded):
         self.engine_name = "Google"
         self.MAX_DOMAINS = 11
         self.MAX_PAGES = 200
-        super(GoogleEnum, self).__init__(self, base_url, self.engine_name, domain, subdomains, silent=silent, logger=logger)
+        super(GoogleEnum, self).__init__(base_url, self.engine_name, domain, subdomains, silent=silent, logger=logger)
         self.q = q
         return
 
