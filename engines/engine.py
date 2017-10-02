@@ -151,8 +151,9 @@ class AskEnum(EnumratorBaseThreaded):
         self.engine_name = "Ask"
         self.MAX_DOMAINS = 11
         self.MAX_PAGES = 0
-        EnumratorBaseThreaded.__init__(self, base_url, self.engine_name, domain, subdomains, q=q, silent=silent,
-                                       logger=logger)
+        
+        super(AskEnum, self).__init__(base_url, self.engine_name, domain, subdomains, silent=silent,
+                                         logger=logger)
         self.q = q
         return
 
@@ -195,8 +196,8 @@ class BingEnum(EnumratorBaseThreaded):
         self.engine_name = "Bing"
         self.MAX_DOMAINS = 30
         self.MAX_PAGES = 0
-        EnumratorBaseThreaded.__init__(self, base_url, self.engine_name, domain, subdomains, q=q, silent=silent,
-                                       logger=logger)
+        super(BingEnum, self).__init__(base_url, self.engine_name, domain, subdomains, silent=silent,
+                                         logger=logger)
         self.q = q
         return
 
@@ -239,7 +240,7 @@ class BaiduEnum(EnumratorBaseThreaded):
         self.engine_name = "Baidu"
         self.MAX_DOMAINS = 2
         self.MAX_PAGES = 760
-        EnumratorBaseThreaded.__init__(self, base_url, self.engine_name, domain, subdomains, q=q, silent=silent,
+        super(BaiduEnum, self).__init__(base_url, self.engine_name, domain, subdomains, silent=silent,
                                          logger=logger)
         self.querydomain = self.domain
         self.q = q
