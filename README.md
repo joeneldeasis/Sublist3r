@@ -150,7 +150,7 @@ Short Form    | Long Form         | Description
 
 ```python
 import sublist3r 
-subdomains = sublist3r.main(domain, no_threads, savefile, ports, silent, verbose, enable_bruteforce, engines)
+subdomains = sublist3r.main(domain, no_threads, savefile, ports, silent, verbose, enable_bruteforce, takeover_check, engines)
 ```
 The main function will return a set of unique subdomains found by Sublist3r
 
@@ -161,12 +161,13 @@ The main function will return a set of unique subdomains found by Sublist3r
 * **silent**: set sublist3r to work in silent mode during the execution (helpful when you don't need a lot of noise).
 * **verbose**: display the found subdomains in real time.
 * **enable_bruteforce**: enable the bruteforce module.
+* **takeover_check**: enable subdomain takeover checks.
 * **engines**: (Optional) to choose specific engines.
 
 Example to enumerate subdomains of Yahoo.com:
 ```python
 import sublist3r 
-subdomains = sublist3r.main('yahoo.com', 40, 'yahoo_subdomains.txt', ports= None, silent=False, verbose= False, enable_bruteforce= False, engines=None)
+subdomains = sublist3r.main('yahoo.com', 40, 'yahoo_subdomains.txt', ports= None, silent=False, verbose= False, enable_bruteforce= False, takeover_check=False, engines=None)
 ```
 
 ## License
