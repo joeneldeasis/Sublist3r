@@ -139,5 +139,13 @@ class SubScann3r:
 
             elif not self.scan_flags.Silent:
                 for subdomain in subdomains:
-                    print(self.logger.G + subdomain + self.logger.W)
+                    print(self.logger.G + "[-] Listing down all the pingable hosts..." + self.logger.W);
+                    if os.name == 'nt':
+                        status = os.system("ping -q -c 2 " + subdomain + " > NUL")
+                        if status == 0:
+                            print(self.logger.G + subdomain + self.logger.W);
+                    else:
+                        status = os.system("ping -q -c 2 " + subdomain + " &>/dev/null")
+                        if status == 0:
+                            print(self.logger.G + subdomain + self.logger.W);
         return subdomains
